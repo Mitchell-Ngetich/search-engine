@@ -3,8 +3,9 @@ development:
   clients:
     # Defines the default client. (required)
     default:
-      # Mongoidcan connect to a URI accepted by the driver:
-      uri: <%= ENV['MONGODB_URI'] %>
+      # Mongoid can connect to a URI accepted by the driver:
+      uri: "mongodb+srv://mitch:Mitchell2024@book-store-mern.motxo04.mongodb.net/search_engine_development?retryWrites=true&w=majority"
+
 
   # Configure Mongoid specific options. (optional)
   options:
@@ -73,10 +74,10 @@ test:
           mode: :primary
         max_pool_size: 1
 
-production:
-  # Configure available database clients. (required)
-  clients:
-    # Defines the default client. (required)
-    default:
-      # Mongoid can connect to a URI accepted by the driver:
-      uri: <%= ENV['MONGODB_URI'] %>
+# production:
+#   # Configure available database clients. (required)
+#   clients:
+#     # Defines the default client. (required)
+#     default:
+#       # Mongoid can connect to a URI accepted by the driver:
+#       uri: <%= "ENV['MONGODB_URI']" %>
