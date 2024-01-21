@@ -1,24 +1,29 @@
-# README
+# Project Name
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Search Engine
 
-Things you may want to cover:
+## Description
 
-* Ruby version
+This project is a web application built with Ruby on Rails and JavaScript. It provides a search functionality that allows users to search for queries. The search results are grouped to avoid duplicate listing and can be filtered based on a prefix.
 
-* System dependencies
+## System dependencies
 
-* Configuration
+1. Ruby 3.0.2
+2. Rails 7.0.8
+3. MongoDB
 
-* Database creation
+## Installation
 
-* Database initialization
+1. Clone the repository: `git clone <repository-url>`
+2. Navigate to the project directory: `cd <project-directory>`
+3. Install the dependencies: `bundle install`
+4. Setup the database: `rails db:setup`
+5. Start the server: `rails server`
 
-* How to run the test suite
+## Usage
 
-* Services (job queues, cache servers, search engines, etc.)
+Open your browser and navigate to `http://localhost:3000`. Enter your search query in the search box and press enter. The search results will be displayed in a table below the search box.
 
-* Deployment instructions
+## Contributing
 
-* ...
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
