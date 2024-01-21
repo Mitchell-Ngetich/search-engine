@@ -31,7 +31,7 @@
     const searchQueryInput = document.getElementById("searchQuery");
     let searchedValue = searchQueryInput.value.replace(/\s/g, '');
 
-    // Event listener for form submission
+// add event listener for form submission
     userSearchForm.addEventListener("submit", function (event) {
       if (!userSearchForm.checkValidity()) {
         event.preventDefault();
@@ -43,9 +43,7 @@
       arrayStoredResponses=[]
     });
   
-
-
-    // Event listener for search query input
+  // add event listener for search query input
     searchQueryInput.addEventListener('keyup', function() {
       const searchQuery = searchQueryInput.value;
       fetch('https://api.ipify.org?format=json')
@@ -69,8 +67,6 @@
       });
 
     });
-
-
   });
 
   function loadSearchedQueries(){
@@ -90,7 +86,6 @@
   })
     .then(response => response.json())
     .then(data => {
-      // Group the search queries to avoid duplicate listing
       const groupedQueries = data.user_searches.reduce((acc, curr) => {
         acc[curr.search_query] = (acc[curr.search_query] || 0) + 1;
         return acc;

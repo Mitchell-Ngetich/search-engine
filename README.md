@@ -14,8 +14,8 @@ This project is a web application built with Ruby on Rails and JavaScript. It pr
 
 ## Installation
 
-1. Clone the repository: `git clone <repository-url>`
-2. Navigate to the project directory: `cd <project-directory>`
+1. Clone the repository: `git clone git@github.com:Mitchell-Ngetich/search-engine.git`
+2. Navigate to the project directory: `cd search-engine`
 3. Install the dependencies: `bundle install`
 4. Setup the database: `rails db:setup`
 5. Start the server: `rails server`
