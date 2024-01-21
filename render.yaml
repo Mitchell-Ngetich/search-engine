@@ -1,0 +1,8 @@
+services:
+  - name: web
+    env: production
+    buildCommand: "bundle exec rake assets:precompile"
+    startCommand: "bundle exec rails server -p $PORT"
+databases:
+  - name: mongodb
+    plan: sandbox
