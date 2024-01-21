@@ -1,0 +1,124 @@
+<%= form_with(model: @user_search, url: user_searches_path, method: :post, html: { class: 'form', id: 'userSearchForm', novalidate: true }) do |form| %>
+  <div class="form-group">
+    <%= form.label :search_query, 'Search Query' %>
+    <%= form.text_field :search_query, id: 'searchQuery', class: 'form-control', placeholder: 'Enter your search query', required: true, type: 'text'%>
+  </div>
+
+  <div class="form-group">
+    <%= form.hidden_field :ip_address, id: 'ipAddress', value: request.remote_ip %>
+  </div>
+
+  <div class="text-center">
+  <%= form.submit 'Search', class: 'btn btn-primary' %>
+  </div>
+
+<% end %>
+  <div id="my_results_placeholder" class="form">
+  <table id="results">
+  <tr>
+    <th>Searched Term</th>
+    <th>Search Frequency</th>
+  </tr>
+  </table>
+  </div>
+<script>
+
+  document.addEventListener("DOMContentLoaded", loadSearchedQueries);
+  let  arrayStoredResponses=[]
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const userSearchForm = document.getElementById("userSearchForm");
+    const searchQueryInput = document.getElementById("searchQuery");
+    let searchedValue = searchQueryInput.value.replace(/\s/g, '');
+
+    // Event listener for form submission
+    userSearchForm.addEventListener("submit", function (event) {
+      if (!userSearchForm.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      userSearchForm.classList.add('was-validated');
+
+      searchQueryInput.value = "";
+      arrayStoredResponses=[]
+    });
+  
+
+
+    // Event listener for search query input
+    searchQueryInput.addEventListener('keyup', function() {
+      const searchQuery = searchQueryInput.value;
+      fetch('https://api.ipify.org?format=json')
+    .then(response => response.json())
+    .then(data => {
+      fetch(
+        arrayStoredResponses[0] !== null && arrayStoredResponses[0] !== undefined ? 
+        '<%= user_searches_path %>'+"/"+arrayStoredResponses[0].user_search._id.$oid : '<%= user_searches_path %>', {
+        method: arrayStoredResponses[0] !== null && arrayStoredResponses[0] !== undefined ? 'PATCH' : 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({ user_search: { search_query: searchQuery, ip_address: data.ip } })
+      })
+        .then(response => response.json())
+        .then(data => {
+          arrayStoredResponses.push(data)
+          loadSearchedQueries()
+        });
+      });
+
+    });
+
+
+  });
+
+  function loadSearchedQueries(){
+
+    fetch('https://api.ipify.org?format=json')
+    .then(response => response.json())
+    .then(data => {
+
+    const fullRoute = "<%= search_user_searches_path %>" + "?ip_address=" + encodeURIComponent(data.ip);
+
+   fetch(fullRoute, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+    },
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Group the search queries to avoid duplicate listing
+      const groupedQueries = data.user_searches.reduce((acc, curr) => {
+        acc[curr.search_query] = (acc[curr.search_query] || 0) + 1;
+        return acc;
+      }, {});
+
+      let results_table = document.getElementById('results');
+      let rows = document.querySelectorAll('.new_row');
+      rows.forEach(row => row.parentNode.removeChild(row));
+
+       let filteredGroupedQueries = Object.keys(groupedQueries)
+        .filter(key => key.replace(/\s/g, '').startsWith(document.getElementById("searchQuery").value.replace(/\s/g, '')))
+        .reduce((res, key) => (res[key] = groupedQueries[key], res), {});
+
+
+      for (const query in filteredGroupedQueries) {
+          var row = `
+          <tr class='new_row'>
+            <td>${query}</td>
+            <td>${filteredGroupedQueries[query]}</td> 
+          </tr>`;
+
+          results_table.innerHTML += row;
+
+      }
+    });
+    });
+
+  }
+
+
+</script>
