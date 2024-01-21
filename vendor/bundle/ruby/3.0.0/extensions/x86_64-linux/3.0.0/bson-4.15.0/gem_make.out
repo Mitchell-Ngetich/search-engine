@@ -1,0 +1,21 @@
+current directory: /home/mitchell/Interview/search_engine/vendor/bundle/ruby/3.0.0/gems/bson-4.15.0/ext/bson
+/home/mitchell/.rbenv/versions/3.0.2/bin/ruby -I /home/mitchell/.rbenv/versions/3.0.2/lib/ruby/3.0.0 -r ./siteconf20240121-291605-td9sdr.rb extconf.rb
+creating Makefile
+
+current directory: /home/mitchell/Interview/search_engine/vendor/bundle/ruby/3.0.0/gems/bson-4.15.0/ext/bson
+make DESTDIR\= clean
+
+current directory: /home/mitchell/Interview/search_engine/vendor/bundle/ruby/3.0.0/gems/bson-4.15.0/ext/bson
+make DESTDIR\=
+compiling bytebuf.c
+compiling endian.c
+compiling init.c
+compiling libbson-utf8.c
+compiling read.c
+compiling util.c
+compiling write.c
+linking shared-object bson_native.so
+
+current directory: /home/mitchell/Interview/search_engine/vendor/bundle/ruby/3.0.0/gems/bson-4.15.0/ext/bson
+make DESTDIR\= install
+/bin/install -c -m 0755 bson_native.so ./.gem.20240121-291605-87zs15
